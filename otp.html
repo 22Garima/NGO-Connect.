@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP - NGOConnect</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            NGO<span>Connect</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- OTP Verification -->
+
+    <section class="signup-section">
+
+        <div class="signup-card">
+
+            <div class="signup-icon">
+                🔐
+            </div>
+
+            <p class="signup-label">
+                VERIFY PHONE
+            </p>
+
+            <h1>
+                Enter OTP
+            </h1>
+
+            <p class="signup-subtitle">
+                Enter the 6-digit OTP sent to your phone number.
+            </p>
+
+
+            <!-- OTP Form -->
+
+            <form id="otpForm">
+
+                <label for="otp">
+                    OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Verify OTP →
+                </button>
+
+            </form>
+
+
+            <!-- Resend OTP -->
+
+            <p class="login-text">
+
+                Didn't receive the OTP?
+
+                <button
+                    type="button"
+                    id="resendOtp"
+                    class="text-button"
+                >
+                    Resend OTP
+                </button>
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- JavaScript -->
+
+    <script
+        type="module"
+        src="./script.js"
+    ></script>
+
+</body>
+
+</html>

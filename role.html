@@ -1,0 +1,733 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Role | NGOConnect</title>
+
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    .impact-page {
+      min-height: 100vh;
+      padding: 28px 6%;
+      background: var(--bg, #f4f8f7);
+      color: var(--text, #173c35);
+    }
+
+    .impact-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .impact-brand {
+      color: #176b5b;
+      font-size: 27px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .impact-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .impact-nav button,
+    .impact-nav a,
+    .impact-nav select {
+      padding: 10px 15px;
+      border: 1px solid #d8e8e2;
+      border-radius: 999px;
+      background: white;
+      color: #176b5b;
+      font: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .impact-intro {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .impact-eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #dff4e9;
+      color: #176b5b;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .impact-intro h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+    }
+
+    .impact-intro p {
+      margin: 0;
+      color: #637b73;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Slideshow container */
+    .impact-stage {
+      position: relative;
+      max-width: 1050px;
+      min-height: 390px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 30px;
+      background: #e1f5e9;
+      box-shadow: 0 18px 50px rgba(23, 107, 91, 0.1);
+    }
+
+    .impact-slide {
+      display: none;
+      min-height: 390px;
+      padding: 48px 8%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 34px;
+    }
+
+    .impact-slide.active {
+      display: flex;
+      animation: slideIn 0.5s ease;
+    }
+
+    .slide-green {
+      background: linear-gradient(120deg, #d9f7e6, #effcf4);
+    }
+
+    .slide-peach {
+      background: linear-gradient(120deg, #fff0df, #ffe0d5);
+    }
+
+    .slide-lavender {
+      background: linear-gradient(120deg, #ece5ff, #f9edff);
+    }
+
+    .slide-copy {
+      flex: 1;
+      max-width: 540px;
+    }
+
+    .slide-number {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: #176b5b;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .slide-copy h2 {
+      margin: 0 0 16px;
+      font-size: clamp(29px, 4vw, 43px);
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+
+    .slide-copy p {
+      margin: 0 0 24px;
+      color: #536d63;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .role-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: #176b5b;
+      color: white;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .role-cta:hover {
+      transform: translateY(-2px);
+      background: #105447;
+    }
+
+    /* Decorative artwork without photos */
+    .slide-art {
+      position: relative;
+      display: grid;
+      flex: 0 0 245px;
+      width: 245px;
+      height: 245px;
+      place-items: center;
+    }
+
+    .art-orbit {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 2px dashed rgba(23, 107, 91, 0.3);
+      border-radius: 50%;
+      animation: orbit 24s linear infinite;
+    }
+
+    .art-circle {
+      display: grid;
+      width: 155px;
+      height: 155px;
+      place-items: center;
+      border-radius: 45% 55% 60% 40% / 45% 45% 55% 55%;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 12px 35px rgba(40, 80, 60, 0.09);
+      font-size: 68px;
+    }
+
+    .art-sticker {
+      position: absolute;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      border: 4px solid rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 8px 20px rgba(40, 80, 60, 0.1);
+      font-size: 27px;
+    }
+
+    .sticker-one {
+      top: 18px;
+      right: 8px;
+      transform: rotate(10deg);
+    }
+
+    .sticker-two {
+      bottom: 22px;
+      left: 8px;
+      transform: rotate(-9deg);
+    }
+
+    .slide-peach .art-circle {
+      background: #fff9f2;
+    }
+
+    .slide-lavender .art-circle {
+      background: #fffaff;
+    }
+
+    /* Previous/next buttons and dots */
+    .slide-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 22px auto 0;
+    }
+
+    .slide-arrow {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid #d9e7e1;
+      border-radius: 50%;
+      background: white;
+      color: #176b5b;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .slide-arrow:hover {
+      background: #e2f5eb;
+    }
+
+    .slide-dots {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .slide-dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 0;
+      border-radius: 99px;
+      background: #c8d9d1;
+      cursor: pointer;
+      transition: width 0.25s, background 0.25s;
+    }
+
+    .slide-dot.active {
+      width: 28px;
+      background: #176b5b;
+    }
+
+    .slide-status {
+      margin-top: 10px;
+      color: #6c8178;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* Information cards */
+    .impact-info {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      max-width: 1050px;
+      margin: 36px auto 0;
+    }
+
+    .info-card {
+      padding: 23px;
+      border: 1px solid #e1ebe5;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .info-icon {
+      display: grid;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 15px;
+      place-items: center;
+      border-radius: 14px;
+      background: #e1f5e9;
+      font-size: 23px;
+    }
+
+    .info-card:nth-child(2) .info-icon {
+      background: #fff0df;
+    }
+
+    .info-card:nth-child(3) .info-icon {
+      background: #ece5ff;
+    }
+
+    .info-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: #6a7e75;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes orbit {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .impact-page {
+        padding: 20px 5%;
+      }
+
+      .impact-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 26px;
+      }
+
+      .impact-nav {
+        gap: 8px;
+      }
+
+      .impact-nav button,
+      .impact-nav a,
+      .impact-nav select {
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+
+      .impact-stage,
+      .impact-slide {
+        min-height: 0;
+      }
+
+      .impact-slide {
+        padding: 32px 23px;
+        flex-direction: column-reverse;
+        gap: 20px;
+        text-align: center;
+      }
+
+      .slide-art {
+        flex: 0 0 170px;
+        width: 170px;
+        height: 170px;
+      }
+
+      .art-orbit {
+        width: 155px;
+        height: 155px;
+      }
+
+      .art-circle {
+        width: 110px;
+        height: 110px;
+        font-size: 49px;
+      }
+
+      .art-sticker {
+        width: 43px;
+        height: 43px;
+        border-width: 3px;
+        border-radius: 14px;
+        font-size: 21px;
+      }
+
+      .slide-copy p {
+        font-size: 15px;
+      }
+
+      .impact-info {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .info-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .info-icon {
+        flex-shrink: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .impact-slide,
+      .art-orbit {
+        animation: none;
+      }
+
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="impact-page">
+
+    <header class="impact-header">
+      <a href="index.html" class="impact-brand">NGOConnect</a>
+
+      <nav class="impact-nav" aria-label="Main navigation">
+        <a href="index.html" id="navHome">Home</a>
+
+        <button type="button" id="themeModeToggle">
+          🌙 Theme
+        </button>
+
+        <select id="languageSelect" aria-label="Select language">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+
+        <button type="button" id="navLogout">Logout</button>
+      </nav>
+    </header>
+
+    <section class="impact-intro">
+      <span class="impact-eyebrow">Small actions. Real impact.</span>
+
+      <h1>Every connection can change a life.</h1>
+
+      <p>
+        Choose how you want to be part of the change.
+        Together, we can connect needs with the resources that matter.
+      </p>
+    </section>
+
+    <section
+      class="impact-stage"
+      id="roleSlideshow"
+      aria-label="Choose your role slideshow"
+      aria-roledescription="carousel"
+    >
+      <article
+        class="impact-slide slide-green active"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 of 3: NGO"
+        aria-hidden="false"
+      >
+        <div class="slide-copy">
+          <span class="slide-number">01 / 03 · FOR NGOs</span>
+
+          <h2 id="roleNGOTitle">Good work deserves good support.</h2>
+
+          <p id="roleNGODescription">
+            Share what your organisation needs and find resources,
+            volunteers, and people ready to help your mission grow.
+          </p>
+
+          <a class="role-cta" href="ngo.html">
+            Continue as NGO <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="slide-art" aria-hidden="true">
+          <div class="art-orbit"></div>
+          <div class="art-circle">🤝</div>
+          <div class="art-sticker sticker-one">🌱</div>
+          <div class="art-sticker sticker-two">💚</div>
+        </div>
+      </article>
+
+      <article
+        class="impact-slide slide-peach"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="2 of 3: Provider"
+        aria-hidden="true"
+      >
+        <div class="slide-copy">
+          <span class="slide-number">02 / 03 · FOR PROVIDERS</span>
+
+          <h2 id="roleProviderTitle">What you share can matter.</h2>
+
+          <p id="roleProviderDescription">
+            Offer food, clothes, medicines, funds, or your time.
+            Your contribution can reach the people who need it most.
+          </p>
+
+          <a class="role-cta" href="provider.html">
+            Continue as Provider <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="slide-art" aria-hidden="true">
+          <div class="art-orbit"></div>
+          <div class="art-circle">🎁</div>
+          <div class="art-sticker sticker-one">✨</div>
+          <div class="art-sticker sticker-two">🧡</div>
+        </div>
+      </article>
+
+      <article
+        class="impact-slide slide-lavender"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="3 of 3: Individual"
+        aria-hidden="true"
+      >
+        <div class="slide-copy">
+          <span class="slide-number">03 / 03 · FOR INDIVIDUALS</span>
+
+          <h2 id="roleIndividualTitle">You deserve support, too.</h2>
+
+          <p id="roleIndividualDescription">
+            Tell us what you need and discover support that may
+            be available from organisations and generous people.
+          </p>
+
+          <a class="role-cta" href="individual.html">
+            Find Support <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="slide-art" aria-hidden="true">
+          <div class="art-orbit"></div>
+          <div class="art-circle">💜</div>
+          <div class="art-sticker sticker-one">🌈</div>
+          <div class="art-sticker sticker-two">🫶</div>
+        </div>
+      </article>
+    </section>
+
+    <div class="slide-controls" aria-label="Slideshow controls">
+      <button type="button" class="slide-arrow"
+        id="previousSlide" aria-label="Previous slide">‹</button>
+
+      <div class="slide-dots">
+        <button type="button" class="slide-dot active"
+          aria-label="Show NGO slide" aria-current="true"></button>
+
+        <button type="button" class="slide-dot"
+          aria-label="Show Provider slide"></button>
+
+        <button type="button" class="slide-dot"
+          aria-label="Show Individual slide"></button>
+      </div>
+
+      <button type="button" class="slide-arrow"
+        id="nextSlide" aria-label="Next slide">›</button>
+    </div>
+
+    <p class="slide-status" id="slideStatus" aria-live="polite">
+      Slide 1 of 3 · Changes automatically
+    </p>
+
+    <section class="impact-info" aria-label="How NGOConnect works">
+      <article class="info-card">
+        <div class="info-icon" aria-hidden="true">🔎</div>
+        <div>
+          <h3>Start with a need</h3>
+          <p>Share what is needed so the right people can discover it.</p>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <div class="info-icon" aria-hidden="true">🎁</div>
+        <div>
+          <h3>Offer what you can</h3>
+          <p>Every useful contribution can make a meaningful difference.</p>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <div class="info-icon" aria-hidden="true">🌍</div>
+        <div>
+          <h3>Grow through connection</h3>
+          <p>Bring communities, organisations, and resources closer together.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const stage = document.getElementById("roleSlideshow");
+      if (!stage) return;
+
+      const slides = Array.from(stage.querySelectorAll(".impact-slide"));
+      const dots = Array.from(document.querySelectorAll(".slide-dot"));
+      const previousButton = document.getElementById("previousSlide");
+      const nextButton = document.getElementById("nextSlide");
+      const status = document.getElementById("slideStatus");
+
+      let currentIndex = 0;
+      let slideshowTimer = null;
+
+      // CHANGED: 3000 ms = 3 seconds between slides
+      const interval = 3000;
+
+      function showSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+          const active = i === currentIndex;
+          slide.classList.toggle("active", active);
+          slide.setAttribute("aria-hidden", String(!active));
+        });
+
+        dots.forEach((dot, i) => {
+          const active = i === currentIndex;
+          dot.classList.toggle("active", active);
+
+          if (active) {
+            dot.setAttribute("aria-current", "true");
+          } else {
+            dot.removeAttribute("aria-current");
+          }
+        });
+
+        if (status) {
+          status.textContent =
+            `Slide ${currentIndex + 1} of ${slides.length} · Changes automatically`;
+        }
+      }
+
+      function stopSlideshow() {
+        if (slideshowTimer !== null) {
+          clearInterval(slideshowTimer);
+          slideshowTimer = null;
+        }
+      }
+
+      function startSlideshow() {
+        stopSlideshow();
+
+        if (document.hidden) return;
+
+        slideshowTimer = setInterval(() => {
+          if (!stage.matches(":hover") &&
+              !stage.contains(document.activeElement)) {
+            showSlide(currentIndex + 1);
+          }
+        }, interval);
+      }
+
+      previousButton.addEventListener("click", () => {
+        showSlide(currentIndex - 1);
+        startSlideshow();
+      });
+
+      nextButton.addEventListener("click", () => {
+        showSlide(currentIndex + 1);
+        startSlideshow();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+          startSlideshow();
+        });
+      });
+
+      stage.addEventListener("mouseenter", stopSlideshow);
+      stage.addEventListener("mouseleave", startSlideshow);
+      stage.addEventListener("focusin", stopSlideshow);
+
+      stage.addEventListener("focusout", (event) => {
+        if (!stage.contains(event.relatedTarget)) {
+          startSlideshow();
+        }
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          stopSlideshow();
+        } else {
+          startSlideshow();
+        }
+      });
+
+      showSlide(0);
+      startSlideshow();
+    })();
+  </script>
+
+  <script type="module" src="./script.js?v=3"></script>
+</body>
+</html>
+```

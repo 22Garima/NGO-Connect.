@@ -1,0 +1,17 @@
+NGOCONNECT - START HERE (WINDOWS)
+
+1. Extract the ZIP.
+2. Open the folder named ngo.project.new in VS Code.
+3. Double-click run_backend.bat. Keep the black terminal window open.
+4. Wait until it says Running on http://127.0.0.1:5000.
+5. In VS Code, right-click the ROOT index.html (not public/index.html) and choose Open with Live Server.
+6. Use the website while both Live Server and the Python terminal remain open.
+7. Test the backend at http://127.0.0.1:5000/api/health. It should report 1000 NGO directory records.
+
+If PowerShell blocks virtual-environment activation, use run_backend.bat instead; it uses the batch activation script and does not need a PowerShell execution-policy change.
+
+For NGO-to-Provider matching: submit an NGO request and check provider offers in Firestore collection resources.
+For Provider-to-NGO matching: submit a provider offer and check NGO requests in Firestore collection requests.
+For Individual-to-NGO matching: submit an individual request. Flask reads the 1,000-NGO Excel directory in dataset/.
+
+Microsoft Login requires one-time Firebase and Microsoft Entra configuration. See README_SMART_MATCHING.md. The Microsoft client secret must be entered in Firebase Console only, never in this project folder.

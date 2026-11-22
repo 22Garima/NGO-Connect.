@@ -1,0 +1,1082 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b5b">
+  <title>Sign Up | NGOConnect</title>
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    :root {
+      --ng-green: #176b5b;
+      --ng-green-dark: #105447;
+      --ng-mint: #e7f5ec;
+      --ng-text: #193d32;
+      --ng-muted: #74867e;
+      --ng-border: #dcebe1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ng-text);
+      background:
+        radial-gradient(ellipse at 5% 10%, #e0f4e7, transparent 35%),
+        radial-gradient(ellipse at 95% 90%, #e4f4e9, transparent 32%),
+        #f7fbf8;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+    a { color: var(--ng-green); }
+
+    /* Shared NGOConnect logo styling */
+    .navbar {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid #e4eee7;
+    }
+
+    .nav-container {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 76px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ng-green);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(145deg, #2aa876, #176b5b);
+      border-radius: 13px;
+      box-shadow: 0 5px 14px #176b5b25;
+    }
+
+    .logo-icon svg {
+      width: 25px;
+      height: 25px;
+      display: block;
+    }
+
+    .logo-text { color: var(--ng-green); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: #526b60;
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--ng-green); }
+
+    .nav-links .nav-login {
+      padding: 10px 17px;
+      color: var(--ng-green);
+      background: #edf7f0;
+      border: 1px solid #d8ebdf;
+      border-radius: 10px;
+    }
+
+    .signup-page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 28px auto 48px;
+    }
+
+    .settings-bar {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .settings-bar select,
+    .settings-bar button {
+      min-height: 36px;
+      padding: 7px 10px;
+      color: #426358;
+      background: #fff;
+      border: 1px solid var(--ng-border);
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .signup-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr);
+      align-items: stretch;
+      gap: 28px;
+    }
+
+    .welcome-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 700px;
+      padding: 36px;
+      overflow: hidden;
+      isolation: isolate;
+      color: white;
+      background: linear-gradient(145deg, #176b5b, #105447);
+      border-radius: 25px;
+    }
+
+    .welcome-panel::before,
+    .welcome-panel::after {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      border: 1px solid #ffffff20;
+      border-radius: 50%;
+    }
+
+    .welcome-panel::before {
+      width: 340px;
+      height: 340px;
+      top: -140px;
+      right: -110px;
+      box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff08;
+    }
+
+    .welcome-panel::after {
+      width: 280px;
+      height: 280px;
+      bottom: -140px;
+      left: -110px;
+      box-shadow: 0 0 0 35px #ffffff08;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      color: #e5fff0;
+      background: #ffffff12;
+      border: 1px solid #ffffff26;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .welcome-badge svg { width: 16px; height: 16px; }
+
+    .welcome-panel h1 {
+      max-width: 440px;
+      margin: 25px 0 14px;
+      font-size: clamp(32px, 3.2vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -1.4px;
+    }
+
+    .welcome-panel h1 span { color: #a8edc5; }
+
+    .welcome-description {
+      max-width: 390px;
+      color: #d2e9dd;
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .community-art {
+      margin: 28px 0;
+      padding: 17px;
+      background: #ffffff0e;
+      border: 1px solid #ffffff20;
+      border-radius: 20px;
+    }
+
+    .community-art > svg {
+      display: block;
+      width: 100%;
+      max-height: 200px;
+    }
+
+    .impact-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .impact-item {
+      padding: 12px 9px;
+      background: #ffffff10;
+      border: 1px solid #ffffff12;
+      border-radius: 13px;
+    }
+
+    .impact-item strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .impact-item span {
+      color: #c7e2d4;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .welcome-quote {
+      margin: 0;
+      padding-top: 18px;
+      color: #e4f5eb;
+      border-top: 1px solid #ffffff30;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .welcome-quote span {
+      display: block;
+      margin-top: 7px;
+      color: #a8edc5;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .signup-card {
+      min-width: 0;
+      padding: 32px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid #e3eee6;
+      border-radius: 25px;
+      box-shadow: 0 18px 50px #22533b0d;
+    }
+
+    .signup-heading { margin-bottom: 24px; }
+
+    .signup-eyebrow {
+      margin: 0 0 8px;
+      color: #2a9870;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .signup-heading h2 {
+      margin: 0 0 9px;
+      color: #193e33;
+      font-size: 29px;
+      letter-spacing: -.8px;
+    }
+
+    .signup-heading p:last-child {
+      margin: 0;
+      color: var(--ng-muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    #signupForm {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-group { min-width: 0; }
+
+    .form-group label,
+    .field-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #294b40;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      min-width: 0;
+      height: 45px;
+      padding: 0 12px;
+      color: #25483d;
+      background: #fbfdfb;
+      border: 1px solid #dce9e0;
+      border-radius: 10px;
+      outline: none;
+      font-size: 13px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .form-group input::placeholder { color: #a0b0a8; }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      background: #fff;
+      border-color: #45a67e;
+      box-shadow: 0 0 0 3px #2aa8761a;
+    }
+
+    .phone-row {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .country-selector { position: relative; }
+
+    .country-selected {
+      width: 100%;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 0 9px;
+      color: #294b40;
+      background: #fbfdfb;
+      border: 1px solid #dce9e0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .country-left {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #selectedFlag { font-size: 16px; }
+    #selectedCode { font-weight: 700; }
+
+    .country-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 20;
+      display: none;
+      width: 220px;
+      max-height: 230px;
+      padding: 6px;
+      overflow-y: auto;
+      background: #fff;
+      border: 1px solid var(--ng-border);
+      border-radius: 12px;
+      box-shadow: 0 12px 28px #183d341f;
+    }
+
+    .country-menu.open { display: block; }
+
+    .country-option {
+      width: 100%;
+      padding: 10px;
+      color: #294b40;
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .country-option:hover { background: #eef8f1; }
+
+    .password-wrap { position: relative; }
+
+    .password-wrap input { padding-right: 45px; }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 7px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: #71877d;
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .password-toggle:hover {
+      color: var(--ng-green);
+      background: #edf7f0;
+    }
+
+    .password-toggle svg { width: 18px; height: 18px; }
+
+    .password-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 10px;
+      margin-top: 9px;
+    }
+
+    .password-rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      color: #8a9a92;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .password-rule::before {
+      content: "○";
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    .password-rule.valid { color: #21885e; }
+    .password-rule.valid::before { content: "✓"; font-weight: 800; }
+
+    .verification-box {
+      padding: 12px;
+      background: #f6fbf7;
+      border: 1px solid #e2eee5;
+      border-radius: 11px;
+    }
+
+    .verification-box .field-label { margin-bottom: 10px; }
+
+    .verification-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 17px;
+    }
+
+    .verification-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0;
+      color: #49675b;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .verification-options input {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--ng-green);
+    }
+
+    #captchaContainer {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      background: #fafcfb;
+      border: 1px solid #dce7df;
+      border-radius: 10px;
+    }
+
+    .captcha-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #captchaCheckbox {
+      width: 19px;
+      height: 19px;
+      accent-color: var(--ng-green);
+      cursor: pointer;
+    }
+
+    .captcha-left label {
+      margin: 0;
+      color: #526b60;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .captcha-mark {
+      color: #6e9b85;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .captcha-mark strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .signup-submit {
+      width: 100%;
+      min-height: 47px;
+      padding: 12px 18px;
+      color: #fff;
+      background: linear-gradient(110deg, #176b5b, #238a68);
+      border: 0;
+      border-radius: 11px;
+      box-shadow: 0 7px 16px #176b5b26;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 750;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .signup-submit:hover {
+      box-shadow: 0 10px 22px #176b5b35;
+      transform: translateY(-1px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 15px;
+      color: #91a198;
+      font-size: 11px;
+    }
+
+    .divider::before,
+    .divider::after {
+      height: 1px;
+      flex: 1;
+      background: #e7eee9;
+      content: "";
+    }
+
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .social-button {
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 10px 8px;
+      color: #3c594d;
+      background: #fff;
+      border: 1px solid #dce9e0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .social-button:hover {
+      background: #f3faf5;
+      border-color: #9ccdb1;
+    }
+
+    .social-button svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .login-prompt {
+      margin: 21px 0 0;
+      color: #75877e;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .login-prompt a {
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .login-prompt a:hover { text-decoration: underline; }
+
+    .security-note {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 16px;
+      color: #899990;
+      font-size: 10px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .security-note svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: #3b9a70;
+    }
+
+    #phoneOtpSection {
+      display: none;
+      margin-top: 17px;
+      padding: 15px;
+      background: #f0f9f3;
+      border: 1px solid #d5eadc;
+      border-radius: 12px;
+    }
+
+    #phoneOtpSection h3 {
+      margin: 0 0 7px;
+      font-size: 15px;
+    }
+
+    #phoneOtpSection p {
+      color: #6b8275;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    #phoneOtpSection input {
+      width: 100%;
+      height: 43px;
+      padding: 0 12px;
+      background: #fff;
+      border: 1px solid #dce9e0;
+      border-radius: 9px;
+    }
+
+    #verifyOtpBtn {
+      width: 100%;
+      min-height: 42px;
+      margin-top: 10px;
+      color: #fff;
+      background: var(--ng-green);
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .page-footer {
+      padding: 0 15px 23px;
+      color: #91a198;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    body[data-theme="ocean"] {
+      --ng-green: #176b78;
+      --ng-green-dark: #10515b;
+    }
+
+    body[data-theme="forest"] {
+      --ng-green: #347447;
+      --ng-green-dark: #245635;
+    }
+
+    body[data-theme="purple"] {
+      --ng-green: #7152a1;
+      --ng-green-dark: #503978;
+    }
+
+    body.dark-mode {
+      color: #e4f1e9;
+      background: #12251f;
+    }
+
+    body.dark-mode .navbar,
+    body.dark-mode .signup-card {
+      background: #1a3028;
+      border-color: #314b3f;
+    }
+
+    body.dark-mode .signup-heading h2,
+    body.dark-mode .form-group label,
+    body.dark-mode .field-label {
+      color: #e3f3e8;
+    }
+
+    body.dark-mode .signup-heading p:last-child,
+    body.dark-mode .login-prompt,
+    body.dark-mode .security-note {
+      color: #b3c8bc;
+    }
+
+    body.dark-mode .form-group input,
+    body.dark-mode .country-selected,
+    body.dark-mode .social-button,
+    body.dark-mode #phoneOtpSection input,
+    body.dark-mode .settings-bar select,
+    body.dark-mode .settings-bar button {
+      color: #e3f3e8;
+      background: #223b31;
+      border-color: #405b4c;
+    }
+
+    body.dark-mode .verification-box,
+    body.dark-mode #captchaContainer,
+    body.dark-mode #phoneOtpSection {
+      background: #20392f;
+      border-color: #405b4c;
+    }
+
+    @media (max-width: 950px) {
+      .signup-layout { grid-template-columns: 1fr; }
+
+      .welcome-panel {
+        min-height: auto;
+        padding: 30px;
+      }
+
+      .community-art { margin: 20px 0; }
+      .community-art > svg { max-height: 170px; }
+      .signup-card { padding: 28px; }
+    }
+
+    @media (max-width: 540px) {
+      .nav-container,
+      .signup-page {
+        width: calc(100% - 24px);
+      }
+
+      .nav-container { min-height: 67px; }
+
+      .logo {
+        gap: 8px;
+        font-size: 20px;
+      }
+
+      .logo-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+      }
+
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 12px; }
+      .nav-links .nav-login { padding: 9px 11px; }
+      .signup-page { margin-top: 18px; }
+
+      .welcome-panel {
+        padding: 23px;
+        border-radius: 20px;
+      }
+
+      .welcome-panel h1 { font-size: 33px; }
+      .welcome-description { font-size: 13px; }
+
+      .impact-row { gap: 7px; }
+      .impact-item { padding: 10px 7px; }
+      .impact-item strong { font-size: 12px; }
+      .impact-item span { font-size: 9px; }
+
+      .signup-card {
+        padding: 22px 17px;
+        border-radius: 20px;
+      }
+
+      .signup-heading h2 { font-size: 26px; }
+      .phone-row { grid-template-columns: 112px minmax(0, 1fr); }
+      .social-buttons { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="./index.html" class="logo" aria-label="NGOConnect home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"
+              fill="currentColor"
+            />
+          </svg>
+        </span>
+        <span class="logo-text">NGOConnect</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="./index.html">Home</a>
+        <a href="./login.html" class="nav-login">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="signup-page">
+    <div class="settings-bar">
+      <select id="languageSelect" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+
+      <select id="themeSelect" aria-label="Select theme">
+        <option value="default">Green theme</option>
+        <option value="ocean">Ocean theme</option>
+        <option value="forest">Forest theme</option>
+        <option value="purple">Purple theme</option>
+      </select>
+
+      <button type="button" id="themeModeToggle">◐ Theme</button>
+    </div>
+
+    <div class="signup-layout">
+      <section class="welcome-panel">
+        <div>
+          <div class="welcome-badge">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
+                stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            Small actions. Real impact.
+          </div>
+
+          <h1>Be the reason someone <span>smiles today.</span></h1>
+
+          <p class="welcome-description">
+            Join a community that connects people who want to help with
+            the people and organisations who need it most.
+          </p>
+        </div>
+
+        <div>
+          <div class="community-art">
+            <svg viewBox="0 0 440 220" role="img" aria-label="People helping their community">
+              <circle cx="220" cy="106" r="88" fill="#fff" opacity=".07"/>
+              <circle cx="220" cy="106" r="66" fill="#fff" opacity=".06"/>
+
+              <path d="M105 80 Q220 12 335 80" stroke="#a8edc5" stroke-width="2" stroke-dasharray="5 7" fill="none"/>
+              <path d="M105 130 Q220 200 335 130" stroke="#a8edc5" stroke-width="2" stroke-dasharray="5 7" fill="none"/>
+
+              <circle cx="100" cy="75" r="25" fill="#f5cba7"/>
+              <path d="M75 72 Q76 43 101 48 Q124 49 126 73 L116 65 L88 65Z" fill="#263f35"/>
+              <path d="M65 157 Q68 105 100 105 Q132 105 136 157Z" fill="#9be2b9"/>
+
+              <circle cx="340" cy="75" r="25" fill="#d9a47f"/>
+              <path d="M315 72 Q313 44 340 46 Q365 47 366 73 L354 61 L325 63Z" fill="#263f35"/>
+              <path d="M304 157 Q307 105 340 105 Q373 105 376 157Z" fill="#f5d68e"/>
+
+              <circle cx="220" cy="105" r="42" fill="#fff" opacity=".13"/>
+              <path d="M220 139 L190 112 C171 93 198 72 220 93 C242 72 269 93 250 112Z" fill="#a8edc5"/>
+              <path d="M200 105H213L220 93L230 116L237 105H245"
+                stroke="#176b5b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+              <path d="M166 39V51 M160 45H172 M275 151V163 M269 157H281"
+                stroke="#f5d68e" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="165" cy="151" r="4" fill="#a8edc5"/>
+              <circle cx="276" cy="54" r="4" fill="#a8edc5"/>
+            </svg>
+
+            <div class="impact-row">
+              <div class="impact-item">
+                <strong>Give</strong>
+                <span>Share resources</span>
+              </div>
+              <div class="impact-item">
+                <strong>Connect</strong>
+                <span>Find the right match</span>
+              </div>
+              <div class="impact-item">
+                <strong>Grow</strong>
+                <span>Build stronger communities</span>
+              </div>
+            </div>
+          </div>
+
+          <blockquote class="welcome-quote">
+            “Alone we can do so little; together we can do so much.”
+            <span>— Helen Keller</span>
+          </blockquote>
+        </div>
+      </section>
+
+      <section class="signup-card">
+        <div class="signup-heading">
+          <p class="signup-eyebrow">Your journey starts here</p>
+          <h2>Create your account</h2>
+          <p>Sign up to connect with people, share resources, and make a difference.</p>
+        </div>
+
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName"
+              placeholder="Enter your full name" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email"
+              placeholder="you@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+
+            <div class="phone-row">
+              <div class="country-selector" id="customCountry">
+                <button type="button" class="country-selected" id="countrySelected"
+                  aria-haspopup="listbox" aria-expanded="false">
+                  <span class="country-left">
+                    <span id="selectedFlag">🇮🇳</span>
+                    <span id="selectedCode">+91</span>
+                  </span>
+                  <span aria-hidden="true">⌄</span>
+                </button>
+
+                <div class="country-menu" id="countryMenu" role="listbox" aria-label="Country calling codes">
+                  <button type="button" class="country-option" data-code="+91" data-flag="🇮🇳">🇮🇳 India (+91)</button>
+                  <button type="button" class="country-option" data-code="+1" data-flag="🇺🇸">🇺🇸 USA (+1)</button>
+                  <button type="button" class="country-option" data-code="+44" data-flag="🇬🇧">🇬🇧 UK (+44)</button>
+                  <button type="button" class="country-option" data-code="+971" data-flag="🇦🇪">🇦🇪 UAE (+971)</button>
+                  <button type="button" class="country-option" data-code="+61" data-flag="🇦🇺">🇦🇺 Australia (+61)</button>
+                  <button type="button" class="country-option" data-code="+81" data-flag="🇯🇵">🇯🇵 Japan (+81)</button>
+                  <button type="button" class="country-option" data-code="+49" data-flag="🇩🇪">🇩🇪 Germany (+49)</button>
+                  <button type="button" class="country-option" data-code="+33" data-flag="🇫🇷">🇫🇷 France (+33)</button>
+                  <button type="button" class="country-option" data-code="+65" data-flag="🇸🇬">🇸🇬 Singapore (+65)</button>
+                </div>
+
+                <input type="hidden" id="countryCode" name="countryCode" value="+91">
+              </div>
+
+              <input type="tel" id="phone" name="phone"
+                placeholder="Phone number" autocomplete="tel-national"
+                inputmode="tel" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Create password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" name="password"
+                placeholder="Create a strong password" autocomplete="new-password"
+                minlength="8" maxlength="16" required>
+
+              <button type="button" id="toggleSignupPassword"
+                class="password-toggle" aria-label="Show password">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M2.5 12s3.4-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.4 6.5-9.5 6.5S2.5 12 2.5 12Z"
+                    stroke="currentColor" stroke-width="1.7"/>
+                  <circle cx="12" cy="12" r="3"
+                    stroke="currentColor" stroke-width="1.7"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="password-rules">
+              <div class="password-rule" id="passwordLengthRule">8–16 characters</div>
+              <div class="password-rule" id="passwordUpperRule">One uppercase letter</div>
+              <div class="password-rule" id="passwordLowerRule">One lowercase letter</div>
+              <div class="password-rule" id="passwordNumberRule">One number</div>
+              <div class="password-rule" id="passwordSpecialRule">One special character</div>
+            </div>
+          </div>
+
+          <div class="verification-box">
+            <span class="field-label">Preferred verification method</span>
+            <div class="verification-options">
+              <label><input type="radio" name="verification" value="email" checked> Email verification</label>
+              <label><input type="radio" name="verification" value="phone"> Phone verification</label>
+            </div>
+          </div>
+
+          <div id="captchaContainer">
+            <div class="captcha-left">
+              <input type="checkbox" id="captchaCheckbox">
+              <label for="captchaCheckbox">I'm not a robot</label>
+            </div>
+            <div class="captcha-mark">
+              <strong>✓</strong>
+              Security check
+            </div>
+          </div>
+
+          <button type="submit" class="signup-submit">
+            Create account <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <div class="divider">or sign up with</div>
+
+        <div class="social-buttons">
+          <button type="button" id="googleSignupBtn" class="social-button">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#4285F4" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.4 9.4 0 0 1-4.1 6.2v5.1h6.6c3.9-3.6 6.1-8.8 6.1-15Z"/>
+              <path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.9l-6.6-5.1c-1.8 1.2-4.1 2-6.9 2-5.3 0-9.8-3.6-11.4-8.4H5.8v5.3A20 20 0 0 0 24 44Z"/>
+              <path fill="#FBBC05" d="M12.6 27.6a12 12 0 0 1 0-7.2v-5.3H5.8a20 20 0 0 0 0 17.8l6.8-5.3Z"/>
+              <path fill="#EA4335" d="M24 12c3 0 5.7 1 7.8 3l5.8-5.8C34.1 5.9 29.5 4 24 4A20 20 0 0 0 5.8 15.1l6.8 5.3C14.2 15.6 18.7 12 24 12Z"/>
+            </svg>
+            Google
+          </button>
+
+          <button type="button" id="microsoftSignupBtn" class="social-button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#F25022" d="M1 1h10v10H1z"/>
+              <path fill="#7FBA00" d="M13 1h10v10H13z"/>
+              <path fill="#00A4EF" d="M1 13h10v10H1z"/>
+              <path fill="#FFB900" d="M13 13h10v10H13z"/>
+            </svg>
+            Microsoft
+          </button>
+        </div>
+
+        <div id="phoneOtpSection">
+          <h3>Verify your phone</h3>
+          <p>Enter the OTP sent to your phone number to continue.</p>
+          <div class="form-group">
+            <label for="otp">One-time password</label>
+            <input type="text" id="otp" name="otp"
+              placeholder="Enter OTP" inputmode="numeric" autocomplete="one-time-code">
+          </div>
+          <button type="button" id="verifyOtpBtn">Verify OTP</button>
+        </div>
+
+        <p class="login-prompt">
+          Already have an account?
+          <a href="./login.html">Log in</a>
+        </p>
+
+        <div class="security-note">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"
+              stroke="currentColor" stroke-width="1.8"/>
+            <path d="m9 12 2 2 4-4" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Your information helps us connect you with the right community. Keep your password private.
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    NGOConnect · Connecting needs with resources
+  </footer>
+
+  <script type="module" src="./script.js"></script>
+</body>
+</html>

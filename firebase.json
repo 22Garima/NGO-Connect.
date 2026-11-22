@@ -1,0 +1,24 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/.venv/**",
+      "**/__pycache__/**",
+      "dataset/**",
+      "app.py",
+      "**/*.py",
+      "requirements.txt",
+      "run_backend.bat",
+      "START_HERE_WINDOWS.txt",
+      "README_SMART_MATCHING.md",
+      "test_matching_engine.py",
+      "serviceAccountKey.json",
+      "**/service-account*.json",
+      "**/*.xlsx",
+      "**/*.xls"
+    ]
+  }
+}
